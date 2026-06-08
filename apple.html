@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>沐晴网络科技 - 创造美好</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#ffffff;
+  --section-alt:#f5f5f7;
+  --text:#1d1d1f;
+  --text2:rgba(29,29,31,0.56);
+  --text3:rgba(29,29,31,0.25);
+  --link:#0066cc;
+  --accent:#0071e3;
+  --border:rgba(0,0,0,0.04);
+  --radius-card:18px;
+  --font:'Inter','SF Pro Display','-apple-system','Helvetica Neue','PingFang SC',sans-serif;
+  --mono:'SF Mono','JetBrains Mono',monospace;
+}
+body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.47059;font-weight:400;letter-spacing:-.022em;min-height:100vh;overflow-y:scroll;-webkit-overflow-scrolling:touch;cursor:default}
+body.modal-open{overflow:hidden}
+::selection{background:var(--link);color:#fff}
+
+/* GLOBAL TAP PHYSICS — everything you touch bounces */
+*{-webkit-tap-highlight-color:transparent;tap-highlight-color:transparent}
+a,button,.app-card,.filter-btn,.copy-box,.nav-toggle,.qr-box,.btn-primary,.btn-ghost,.modal-close button{transition:transform .12s cubic-bezier(.34,1.56,.64,1)!important;touch-action:manipulation}
+a:active,button:active,.app-card:active,.filter-btn:active,.copy-box:active,.nav-toggle:active,.btn-primary:active,.btn-ghost:active,.modal-close button:active{transform:scale(.94)!important;transition-duration:.06s!important}
+/* Sections get a micro-press */
+.section:active,.hero:active,.contact-section:active,.section-image:active{transform:scale(.998);transition:transform .08s}
+img:active{transform:scale(.97);opacity:.9}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(0,0,0,0.04);height:48px}
+nav>div{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:100%}
+nav .logo{font-size:14px;font-weight:600;color:var(--text);text-decoration:none;letter-spacing:-.3px}
+nav .logo span{color:var(--text2)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{text-decoration:none;font-size:12px;font-weight:400;color:var(--text2);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-toggle{display:none;background:none;border:none;font-size:18px;cursor:pointer;color:var(--text);padding:4px}
+
+.hero{background:var(--bg);padding:120px 24px 80px;text-align:center;position:relative;z-index:1}
+.hero-inner{max-width:800px;margin:0 auto}
+.hero-tag{font-size:14px;font-weight:400;color:var(--text2);margin-bottom:16px;letter-spacing:.3px}
+.hero h1{font-size:clamp(40px,5vw,56px);font-weight:700;line-height:1.05;letter-spacing:-.05em;margin-bottom:16px}
+.hero h1 .highlight{color:var(--link)}
+.hero p{font-size:clamp(18px,2vw,24px);font-weight:400;line-height:1.47059;color:var(--text2);max-width:650px;margin:0 auto 28px}
+.btn-primary{background:var(--accent);color:#fff;padding:10px 28px;border-radius:980px;font-size:15px;font-weight:400;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;cursor:pointer}
+.btn-primary:hover{background:#0077ed}
+.btn-ghost{background:transparent;color:var(--link);padding:10px 28px;border-radius:980px;font-size:15px;font-weight:400;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;cursor:pointer}
+.btn-ghost:hover{text-decoration:underline}
+
+.hero-visual{margin-top:60px;display:flex;justify-content:center;gap:24px;align-items:center;flex-wrap:wrap}
+.hero-img-wrap{width:360px;height:240px;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.08);position:relative}
+.hero-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-img-wrap .badge{position:absolute;bottom:12px;left:12px;background:rgba(255,255,255,0.9);backdrop-filter:blur(10px);padding:4px 12px;border-radius:6px;font-size:11px;font-weight:500;color:#1d1d1f}
+.device-frame{width:280px;height:560px;border-radius:40px;background:linear-gradient(145deg,#f0f0f0,#e0e0e0);padding:12px;box-shadow:0 20px 60px rgba(0,0,0,0.12),0 8px 20px rgba(0,0,0,0.04);flex-shrink:0}
+.device-screen{width:100%;height:100%;border-radius:30px;background:#1d1d1f;overflow:hidden;position:relative;padding:16px;display:flex;flex-wrap:wrap;align-content:center;gap:6px;justify-content:center}
+.device-screen .glow{position:absolute;width:200%;height:200%;top:-50%;left:-50%;background:radial-gradient(ellipse,rgba(0,102,204,0.06),transparent 60%);animation:deviceGlow 6s ease-in-out infinite;pointer-events:none}
+@keyframes deviceGlow{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+
+.section{padding:100px 24px;position:relative;z-index:1}
+.section.alt{background:var(--section-alt)}
+.section-inner{max-width:980px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:56px}
+.section-label{font-size:12px;font-weight:400;color:var(--text2);letter-spacing:.4px;text-transform:uppercase;margin-bottom:8px}
+.section-title{font-size:clamp(32px,3.5vw,48px);font-weight:600;letter-spacing:-.03em;line-height:1.08349;margin-bottom:8px}
+.section-sub{font-size:clamp(16px,1.5vw,21px);color:var(--text2);font-weight:400;max-width:560px;margin:0 auto}
+
+.section-image{width:100%;height:360px;overflow:hidden;position:relative;z-index:1}
+.section-image img{width:100%;height:100%;object-fit:cover;display:block}
+.section-image .overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,0.3),transparent);display:flex;align-items:center;padding:0 48px}
+.section-image .overlay span{color:#fff;font-size:28px;font-weight:600;letter-spacing:-.03em;max-width:400px;line-height:1.2}
+
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.about-card{border-radius:var(--radius-card);overflow:hidden;padding:36px}
+.about-card.primary{background:var(--section-alt)}
+.about-card h3{font-size:21px;font-weight:600;letter-spacing:-.02em;margin-bottom:10px}
+.about-card h3 span{color:var(--link)}
+.about-card p{font-size:14px;color:var(--text2);line-height:1.6;letter-spacing:-.01em}
+.about-card p strong{color:var(--text)}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.about-stats>div{text-align:center;padding:24px;background:var(--section-alt);border-radius:14px}
+.stat-num{font-size:40px;font-weight:700;letter-spacing:-.04em;line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:12px;color:var(--text2)}
+
+.filters{display:flex;gap:8px;margin-bottom:44px;flex-wrap:wrap;justify-content:center}
+.filter-btn{padding:6px 18px;border-radius:980px;border:none;background:transparent;color:var(--text2);font-size:13px;font-weight:400;cursor:pointer;transition:all .2s;font-family:var(--font)}
+.filter-btn:hover{color:var(--text)}
+.filter-btn.active{background:var(--section-alt);color:var(--text);font-weight:500}
+
+/* Apps Grid - Physical spring cards with press + bounce */
+.apps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;perspective:1200px}
+.app-card{
+  padding:24px;border-radius:var(--radius-card);background:var(--section-alt);cursor:pointer;
+  transform:translateY(40px) scale(.92) rotateX(8deg);opacity:0;
+  transform-origin:center bottom;
+  transition:transform .8s cubic-bezier(.34,1.56,.64,1),opacity .6s ease,background .3s;
+  position:relative;overflow:hidden;will-change:transform;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  user-select:none;-webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;
+}
+.app-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--link);opacity:0;transition:opacity .3s}
+.app-card.visible{transform:translateY(0) scale(1) rotateX(0);opacity:1}
+/* Press in effect */
+.app-card:active{
+  transform:scale(.94)!important;
+  transition:transform .08s cubic-bezier(.34,1.56,.3,1)!important;
+  background:#e8e8ea;
+}
+/* Hover lift with spring */
+@media(hover:hover){
+  .app-card:hover{background:#eeeef0;transform:translateY(-6px) scale(1.02)!important;transition:transform .4s cubic-bezier(.34,1.56,.64,1)!important}
+  .app-card:hover::after{opacity:.6}
+}
+.app-card .hdr{display:flex;align-items:center;gap:12px;margin-bottom:10px;pointer-events:none}
+.app-card .icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;background:var(--bg);pointer-events:none}
+.app-card .meta{pointer-events:none}
+.app-card .meta h3{font-size:16px;font-weight:600;letter-spacing:-.02em;color:var(--text)}
+.app-card .meta .type{font-size:11px;color:var(--text2);font-weight:400}
+.app-card .body p{font-size:13px;color:var(--text2);line-height:1.5;letter-spacing:-.01em;pointer-events:none}
+.app-card .tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;pointer-events:none}
+.app-card .tags span{font-size:10px;color:var(--text3);font-weight:400}
+.app-card .hint{font-size:10px;color:var(--text3);margin-top:10px;text-align:right;pointer-events:none;opacity:0;transform:translateX(-8px);transition:all .4s .3s}
+.app-card.visible .hint{opacity:1;transform:translateX(0)}
+
+/* Stagger physics: each card enters with spring delay */
+.app-card:nth-child(1){transition-delay:0s}
+.app-card:nth-child(2){transition-delay:.05s}
+.app-card:nth-child(3){transition-delay:.1s}
+.app-card:nth-child(4){transition-delay:.12s}
+.app-card:nth-child(5){transition-delay:.16s}
+.app-card:nth-child(6){transition-delay:.2s}
+.app-card:nth-child(7){transition-delay:.22s}
+.app-card:nth-child(8){transition-delay:.26s}
+.app-card:nth-child(9){transition-delay:.3s}
+.app-card:nth-child(10){transition-delay:.32s}
+.app-card:nth-child(11){transition-delay:.36s}
+.app-card:nth-child(12){transition-delay:.4s}
+
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.svc-card{padding:32px;border-radius:var(--radius-card);background:var(--bg);border:1px solid var(--border)}
+.svc-card .icon{font-size:28px;margin-bottom:10px}
+.svc-card h3{font-size:17px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+.svc-card p{font-size:13px;color:var(--text2);letter-spacing:-.01em}
+
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.process-step{padding:32px 20px;text-align:center;background:var(--bg);border-radius:var(--radius-card);border:1px solid var(--border);transform:translateY(20px);opacity:0;transition:all .6s cubic-bezier(.34,1.56,.64,1)}
+.process-step.visible{transform:translateY(0);opacity:1}
+.process-step:nth-child(2){transition-delay:.08s}
+.process-step:nth-child(3){transition-delay:.16s}
+.process-step:nth-child(4){transition-delay:.24s}
+.process-step .num{font-size:28px;font-weight:700;color:var(--link);letter-spacing:-.04em;margin-bottom:6px;font-family:var(--mono)}
+.process-step h4{font-size:15px;font-weight:600;letter-spacing:-.02em;margin-bottom:4px}
+.process-step p{font-size:12px;color:var(--text2)}
+
+.contact-section{padding:80px 24px 60px;position:relative;z-index:1;background:var(--section-alt)}
+.contact-inner{max-width:520px;margin:0 auto;text-align:center}
+.contact-inner h3{font-size:28px;font-weight:600;letter-spacing:-.03em;margin-bottom:8px}
+.contact-inner p{font-size:15px;color:var(--text2);margin-bottom:28px}
+.contact-inner .qr-box{display:inline-block;background:var(--bg);border-radius:14px;padding:10px;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+.contact-inner .qr-box img{width:140px;height:auto;display:block;border-radius:8px}
+.copy-box{display:inline-flex;align-items:center;gap:8px;background:var(--bg);border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px;margin-bottom:16px;box-shadow:0 1px 6px rgba(0,0,0,0.02);font-family:var(--mono);color:var(--text2)}
+.copy-box:hover{box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+
+footer{text-align:center;padding:20px 24px 28px;font-size:12px;color:var(--text3)}
+
+/* Modal spring animation */
+.modal-overlay{
+  position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .5s cubic-bezier(.16,1,.3,1);
+}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal-card{
+  width:100%;max-width:540px;max-height:85vh;overflow-y:auto;
+  background:var(--bg);border-radius:24px 24px 0 0;padding:0;
+  transform:translateY(100%) scale(.95);
+  transition:transform .6s cubic-bezier(.34,1.56,.64,1);
+  position:relative;transform-origin:center bottom;
+}
+.modal-overlay.open .modal-card{transform:translateY(0) scale(1)}
+.modal-close{position:sticky;top:0;z-index:3;display:flex;justify-content:flex-end;padding:16px 16px 0}
+.modal-close button{width:36px;height:36px;border-radius:50%;border:none;background:var(--section-alt);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--text);transition:all .2s;font-family:var(--font)}
+.modal-close button:hover{background:#e8e8ea}
+.modal-content{padding:0 28px 36px;opacity:0;transform:translateY(20px);transition:all .5s .3s cubic-bezier(.34,1.56,.64,1)}
+.modal-overlay.open .modal-content{opacity:1;transform:translateY(0)}
+.modal-content .icon-large{width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:28px;background:var(--section-alt);margin-bottom:16px}
+.modal-content h2{font-size:28px;font-weight:700;letter-spacing:-.03em;margin-bottom:4px}
+.modal-content .modal-type{font-size:13px;color:var(--text2);margin-bottom:16px}
+.modal-content .modal-desc{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:16px}
+.modal-content .modal-desc2{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:20px}
+.modal-content .modal-feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.modal-content .modal-feats li{list-style:none;font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--section-alt);border-radius:10px;line-height:1.4}
+.modal-content .modal-feats li::before{content:'✓';color:var(--link);font-weight:700;font-size:14px}
+.modal-tech{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.modal-tech span{padding:4px 12px;border-radius:6px;font-size:12px;font-weight:500;background:var(--section-alt);color:var(--text2)}
+
+/* Parallax scroll physics */
+.parallax-section{transform:translateY(0);transition:transform .1s linear}
+
+@media(max-width:968px){
+  .apps-grid{grid-template-columns:repeat(2,1fr)}
+  .about-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:repeat(2,1fr)}
+  .process-steps{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:734px){
+  .hero{padding:100px 20px 60px}
+  .hero h1{font-size:32px}
+  .hero p{font-size:17px}
+  .hero-img-wrap{width:100%;height:200px}
+  .hero-visual{gap:12px}
+  .device-frame{width:200px;height:400px;border-radius:28px;padding:8px}
+  .device-screen{border-radius:22px;padding:12px;gap:4px}
+  .section-image{height:220px}
+  .section-image .overlay{padding:0 24px}
+  .section-image .overlay span{font-size:20px}
+  nav .nav-links{display:none}
+  nav .nav-links.open{display:flex;flex-direction:column;position:absolute;top:48px;left:0;right:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);padding:16px 24px;gap:12px;border-bottom:1px solid var(--border)}
+  .nav-toggle{display:block}
+  .section{padding:60px 20px}
+  .section-title{font-size:28px}
+  .apps-grid{grid-template-columns:1fr}
+  .services-grid{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr 1fr}
+  .modal-content{padding:0 20px 28px}
+  .modal-content .modal-feats{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav"><div>
+  <a href="#" class="logo">沐晴<span>科技</span></a>
+  <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+  <div class="nav-links">
+    <a href="#about">关于</a>
+    <a href="#works">作品</a>
+    <a href="#services">服务</a>
+    <a href="#process">流程</a>
+    <a href="#contact">联系</a>
+  </div>
+</div></nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">私人订制 · 移动应用开发</div>
+    <h1>让想法 <span class="highlight">优雅落地</span></h1>
+    <p>从概念到上架，沐晴网络科技为你打造体验极致、设计惊艳的移动产品。</p>
+    <div class="hero-actions">
+      <a href="#works" class="btn-primary">浏览作品 →</a>
+      <a href="#contact" class="btn-ghost">联系 →</a>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-img-wrap">
+        <img src="https://picsum.photos/seed/appdev/720/480" alt="App Development" loading="lazy">
+        <div class="badge">iOS · Android · HarmonyOS</div>
+      </div>
+      <div class="device-frame">
+        <div class="device-screen"><div class="glow"></div>
+          <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#6C5CE7,#00CEC9);display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff">M</div>
+          <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#FF6B6B,#FFA502);display:flex;align-items:center;justify-content:center;font-size:12px">📊</div>
+          <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#4682FF,#6C5CE7);display:flex;align-items:center;justify-content:center;font-size:12px">📝</div>
+          <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#2ED573,#00CEC9);display:flex;align-items:center;justify-content:center;font-size:12px">🌱</div>
+          <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#00CEC9,#4682FF);display:flex;align-items:center;justify-content:center;font-size:12px">☀️</div>
+          <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#FFA502,#FF6B6B);display:flex;align-items:center;justify-content:center;font-size:12px">🍳</div>
+          <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#FF76BE,#FF6B6B);display:flex;align-items:center;justify-content:center;font-size:12px">🎵</div>
+          <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#2ED573,#FFA502);display:flex;align-items:center;justify-content:center;font-size:12px">🧘</div>
+          <div style="width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#FFA502,#FF76BE);display:flex;align-items:center;justify-content:center;font-size:12px">📷</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-image">
+  <img src="https://picsum.photos/seed/developer-coding/1600/720" alt="Coding" loading="lazy">
+  <div class="overlay"><span>从一行代码开始</span></div>
+</div>
+
+<section class="section alt" id="about">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">关于沐晴</div>
+      <h2 class="section-title">你的专属 App 工坊</h2>
+      <p class="section-sub">不生产流水线产品，只做独一无二的私人订制</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card primary">
+        <h3>什么是 <span>私人订制</span>？</h3>
+        <p>不是套模板，不是改皮。我们从零开始理解你的业务、你的用户、你的想法。每一个功能、每一段动画都是为你量身打造。</p>
+        <p style="margin-top:10px"><strong>Kotlin Compose · SwiftUI · Flutter · React Native</strong> - 四大技术栈全平台覆盖，已完成 20+ 款应用。</p>
+      </div>
+      <div class="about-stats">
+        <div><div class="stat-num">20+</div><div class="stat-lbl">交付项目</div></div>
+        <div><div class="stat-num">100%</div><div class="stat-lbl">客户满意</div></div>
+        <div><div class="stat-num">4</div><div class="stat-lbl">技术栈</div></div>
+        <div><div class="stat-num">7</div><div class="stat-lbl">年经验</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="works">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">作品集</div>
+      <h2 class="section-title">我们的代表作</h2>
+      <p class="section-sub">点击卡片查看完整介绍</p>
+    </div>
+    <div class="filters">
+      <button class="filter-btn active" onclick="filterApps('all',this)">全部</button>
+      <button class="filter-btn" onclick="filterApps('finance',this)">金融理财</button>
+      <button class="filter-btn" onclick="filterApps('health',this)">健康生活</button>
+      <button class="filter-btn" onclick="filterApps('productivity',this)">效率工具</button>
+      <button class="filter-btn" onclick="filterApps('lifestyle',this)">生活方式</button>
+      <button class="filter-btn" onclick="filterApps('creative',this)">创意娱乐</button>
+    </div>
+    <div class="apps-grid" id="appGrid"></div>
+  </div>
+</section>
+
+<div class="section-image">
+  <img src="https://picsum.photos/seed/office-team/1600/720" alt="Team" loading="lazy">
+  <div class="overlay"><span>每一个作品都是我们的骄傲</span></div>
+</div>
+
+<section class="section alt" id="services">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">服务范围</div>
+      <h2 class="section-title">全栈移动端服务</h2>
+      <p class="section-sub">从产品策略到上架发布，一站式搞定</p>
+    </div>
+    <div class="services-grid">
+      <div class="svc-card"><div class="icon">📱</div><h3>原生开发</h3><p>Kotlin + SwiftUI 真正原生体验</p></div>
+      <div class="svc-card"><div class="icon">📲</div><h3>跨平台</h3><p>Flutter / RN 一套代码双端覆盖</p></div>
+      <div class="svc-card"><div class="icon">🎨</div><h3>UI/UX 设计</h3><p>从研究到原型，每个像素有意义</p></div>
+      <div class="svc-card"><div class="icon">☁️</div><h3>后端云服务</h3><p>API + 数据库 + 云部署</p></div>
+      <div class="svc-card"><div class="icon">📊</div><h3>数据分析</h3><p>行为分析 + 性能监控 + 崩溃追踪</p></div>
+      <div class="svc-card"><div class="icon">🚀</div><h3>上架运营</h3><p>全平台发布 + ASO + 版本管理</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="process">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-label">合作流程</div>
+      <h2 class="section-title">从想法到上线</h2>
+      <p class="section-sub">透明高效，步步清晰</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step"><div class="num">01</div><h4>需求沟通</h4><p>深入了解业务需求，输出产品文档</p></div>
+      <div class="process-step"><div class="num">02</div><h4>设计原型</h4><p>交互原型 + 高保真设计稿</p></div>
+      <div class="process-step"><div class="num">03</div><h4>敏捷开发</h4><p>双周迭代，严格质检后交付</p></div>
+      <div class="process-step"><div class="num">04</div><h4>上架交付</h4><p>全平台发布 + 后续维护</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contact">
+  <div class="contact-inner">
+    <h3>一起合作</h3>
+    <p>全新产品？现有项目升级？直接加微信聊：</p>
+    <div class="qr-box"><img src="/img_4f97c2be62d1.jpg" alt="微信名片" style="width:140px;height:auto;display:block;border-radius:8px"></div>
+    <div class="copy-box" onclick="navigator.clipboard?.writeText('1465085142')">
+      <span>WeChat</span>
+      <span style="font-size:11px;color:var(--text3)">微信：1465085142</span>
+    </div>
+    <a href="weixin://dl/chat?1465085142" class="btn-primary">打开微信</a>
+  </div>
+</section>
+
+<footer>沐晴网络科技 · 用心做好每一个 App · 2026</footer>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-card">
+    <div class="modal-close"><button onclick="closeModal()">✕</button></div>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const apps = [
+  {icon:'💰',name:'沐晴记账',type:'旗舰理财',cat:'finance',
+   desc:'旗舰级个人财务管理应用，Material You 动态主题设计，让理财变得优雅高效。',
+   desc2:'不同于传统记账软件的冰冷界面，沐晴记账注重用户体验的每一个细节。从智能分类到多账本管理，从可视化图表到数据加密云同步，每一处都经过精心打磨。',
+   feats:['AI 智能消费分类','收支可视化图表','多账本管理','加密云同步','Material You 主题','桌面小组件','语音记账','月度报告推送'],
+   tech:['Kotlin','Compose','Room','Material You']},
+  {icon:'📊',name:'健康日记',type:'健康追踪',cat:'health',
+   desc:'全方位健康管家，一站式管理你的所有健康数据。',
+   desc2:'与 Apple Health 和 Google Fit 深度集成，自动同步心率、步数、睡眠、饮水、体重等数据。支持自定义健康目标和提醒，生成健康报告，随时掌握身体状态。',
+   feats:['心率监测','步数统计','睡眠分析','饮水提醒','体重追踪','Apple Health 同步','Google Fit 互通','健康报告'],
+   tech:['Flutter','HealthKit','Google Fit API']},
+  {icon:'📝',name:'灵感笔记',type:'效率工具',cat:'productivity',
+   desc:'极简高效的笔记应用，让灵感不再流失。',
+   desc2:'支持富文本和 Markdown 双模编辑，文件夹与标签双维分类。iCloud 实时同步，iPhone、iPad、Mac 随时取用。配合快捷指令捕捉灵感只需一秒。',
+   feats:['富文本编辑','Markdown 预览','文件夹分类','标签系统','iCloud 同步','快捷指令','全文搜索','云备份'],
+   tech:['SwiftUI','CoreData','CloudKit']},
+  {icon:'🌱',name:'小习惯',type:'习惯养成',cat:'lifestyle',
+   desc:'基于行为心理学的科学习惯养成系统。',
+   desc2:'不只是打卡。智能提醒在最合适的时机出现，连胜记录给你持续动力，成就徽章见证每个里程碑。独创的习惯链机制让你直观看到坚持的力量。',
+   feats:['智能提醒','连胜记录','成就徽章','习惯链','数据统计','自定义目标','打卡日历','好友监督'],
+   tech:['React Native','Notifee','Charts']},
+  {icon:'☀️',name:'天气·晴',type:'生活工具',cat:'lifestyle',
+   desc:'最美天气应用，看一眼就知今日天气。',
+   desc2:'逐小时降水雷达、动态天气动画、空气质量地图、极端天气预警。不止预报，更有天气故事——每个天气都有对应的动画场景，让查看天气成为享受。',
+   feats:['逐小时预报','降水雷达','动态动画','空气质量','极端预警','日出日落','生活指数','天气故事'],
+   tech:['Kotlin','Compose','高德地图']},
+  {icon:'🍳',name:'食光食谱',type:'美食生活',cat:'lifestyle',
+   desc:'智能食谱应用，不知道吃啥打开食光。',
+   desc2:'拍照识别食材，AI 推荐食谱。一键生成购物清单，内置烹饪计时器。根据你的口味偏好和饮食限制，智能匹配最适合的菜品。支持多人份量自动换算。',
+   feats:['拍照识菜','AI 推荐','购物清单','烹饪计时','口味偏好','饮食限制','份量换算','收藏'],
+   tech:['Flutter','AI Vision','Firebase']},
+  {icon:'🎵',name:'心流音乐',type:'音乐体验',cat:'creative',
+   desc:'沉浸式音乐播放器，听歌也要有仪式感。',
+   desc2:'动态专辑墙，播放界面随封面变换色彩。AI 歌单推荐基于你的听歌习惯。歌词桌面小组件让歌词成为桌面风景。无损音频支持，听觉享受拉满。',
+   feats:['动态专辑墙','AI 歌单','歌词小组件','无损音频','沉浸播放','均衡器','睡眠定时','CarPlay'],
+   tech:['SwiftUI','AudioKit','Core Media']},
+  {icon:'🧘',name:'薄荷冥想',type:'身心健康',cat:'health',
+   desc:'引导式冥想助手，每天 10 分钟给大脑放个假。',
+   desc2:'精选白噪音场景：雨林、海浪、篝火、星空。专业引导式呼吸训练，从 3 分钟到 30 分钟自由选择。睡眠故事帮你放松入眠。冥想统计追踪你的练习轨迹。',
+   feats:['白噪音场景','呼吸训练','睡眠故事','冥想计时','统计数据','引导课程','场景混音','专注模式'],
+   tech:['Kotlin','Media3','Room']},
+  {icon:'📷',name:'片场摄影',type:'创意工具',cat:'creative',
+   desc:'专业级手机摄影工具，手机也能拍大片。',
+   desc2:'手动参数控制：ISO、快门、白平衡一个不落。RAW 格式输出保留最大后期空间。经典胶片滤镜模拟：富士、柯达、爱克发。光影分析直方图辅助专业创作。',
+   feats:['手动参数','RAW 输出','胶片滤镜','直方图','峰值对焦','曝光补偿','长曝光','水印'],
+   tech:['Flutter','CameraX','OpenCV']},
+  {icon:'📚',name:'阅芽阅读',type:'阅读工具',cat:'productivity',
+   desc:'极简电子书阅读器，回归阅读本质。',
+   desc2:'EPUB、PDF、Mobi 全格式支持。自定义排版：字体、字号、行距、背景色。标注笔记支持导出。跨设备进度同步，手机平板无缝衔接。夜间模式护眼阅读。',
+   feats:['全格式支持','自定义排版','标注笔记','跨设备同步','夜间模式','字体下载','阅读统计','导出'],
+   tech:['SwiftUI','PDFKit','CloudKit']},
+  {icon:'🏃',name:'运动圈',type:'运动社交',cat:'health',
+   desc:'运动记录加社交激励，一个人跑不孤单。',
+   desc2:'GPS 精准轨迹追踪，运动数据全面统计。好友挑战功能让你和跑友互相激励。线上马拉松活动定期举办。运动成就徽章系统，每一次突破都值得庆祝。',
+   feats:['GPS 轨迹','运动统计','好友挑战','线上马拉松','成就徽章','运动日记','排行榜','路线推荐'],
+   tech:['Kotlin','高德地图','WebSocket']},
+  {icon:'💰',name:'日常记账',type:'轻量理财',cat:'finance',
+   desc:'5 秒记一笔，让记账成为习惯。',
+   desc2:'极简交互设计，语音记账说句话就搞定。拍照识别账单，自动提取金额和类别。月度报告推送，消费趋势一目了然。预算管理功能帮你控制开支。',
+   feats:['语音记账','拍照识别','月度报告','预算管理','多账本','分类统计','导出','iCloud'],
+   tech:['React Native','Voice','Camera']},
+];
+
+const grid=document.getElementById('appGrid');
+const modal=document.getElementById('modal');
+const modalContent=document.getElementById('modalContent');
+
+apps.forEach((a,i)=>{
+  const c=document.createElement('div');
+  c.className='app-card';c.dataset.cat=a.cat;c.dataset.index=i;
+  c.innerHTML=`<div class="hdr"><div class="icon">${a.icon}</div><div class="meta"><h3>${a.name}</h3><div class="type">${a.type}</div></div></div><div class="body"><p>${a.desc}</p><div class="tags"><span>${a.tech.slice(0,2).join(' · ')}</span></div></div><div class="hint">点击查看</div>`;
+  c.addEventListener('click',()=>openModal(i));
+  grid.appendChild(c);
+  // Spring-like staggered entrance
+  requestAnimationFrame(()=>{
+    setTimeout(()=>c.classList.add('visible'),100+i*40);
+  });
+});
+
+function openModal(i){
+  const a=apps[i];
+  modalContent.innerHTML=`
+    <div class="icon-large">${a.icon}</div>
+    <h2>${a.name}</h2>
+    <div class="modal-type">${a.type}</div>
+    <div class="modal-desc">${a.desc}</div>
+    <div class="modal-desc2">${a.desc2}</div>
+    <div class="modal-tech">${a.tech.map(t=>`<span>${t}</span>`).join('')}</div>
+    <ul class="modal-feats">${a.feats.map(f=>`<li>${f}</li>`).join('')}</ul>`;
+  modal.classList.add('open');document.body.classList.add('modal-open');
+}
+function closeModal(){
+  modal.classList.remove('open');document.body.classList.remove('modal-open');
+}
+modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});
+
+function filterApps(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.app-card').forEach(c=>{
+    c.style.display=cat==='all'||c.dataset.cat===cat?'':'none';
+  });
+}
+const obs=new IntersectionObserver((e)=>{e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
+document.querySelectorAll('.process-step').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
