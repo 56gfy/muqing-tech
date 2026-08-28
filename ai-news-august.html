@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 八月纪事 | 2026 年中最值得关注的 5 件大事</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-deep: #0a0d14;
+    --bg-card: #121722;
+    --bg-card-hover: #181e2c;
+    --text-primary: #e8e6e1;
+    --text-secondary: #9a958b;
+    --text-muted: #5c5a54;
+    --accent: #d4a853;
+    --accent-light: #f0d78c;
+    --accent-dark: #b8913f;
+    --border: rgba(212, 168, 83, 0.15);
+    --border-soft: rgba(255, 255, 255, 0.06);
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+  body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.8;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* 噪点纹理 */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  /* 顶部光晕 */
+  body::after {
+    content: '';
+    position: absolute;
+    top: -200px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1200px;
+    height: 600px;
+    background: radial-gradient(ellipse at center, rgba(212, 168, 83, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* === Hero 区域 === */
+  .hero {
+    padding: 80px 0 60px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    padding: 6px 18px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    font-weight: 500;
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1.25;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    background: linear-gradient(180deg, #f5f0e6 0%, #c9bfa8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 0.8s ease-out 0.1s both;
+  }
+
+  .hero-subtitle {
+    font-size: 17px;
+    color: var(--text-secondary);
+    font-weight: 300;
+    max-width: 520px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--text-muted);
+    padding-top: 28px;
+    border-top: 1px solid var(--border-soft);
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+  }
+
+  .hero-meta .dot {
+    width: 3px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+
+  .hero-meta strong {
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+
+  /* === 导语 === */
+  .lead {
+    margin: 20px 0 60px;
+    padding: 32px 36px;
+    background: linear-gradient(135deg, rgba(212, 168, 83, 0.06) 0%, rgba(212, 168, 83, 0.02) 100%);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 12px 12px 0;
+    position: relative;
+  }
+
+  .lead::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 80px;
+    color: var(--accent);
+    opacity: 0.15;
+    line-height: 1;
+  }
+
+  .lead p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* === 章节标题 === */
+  .section {
+    margin-bottom: 56px;
+  }
+
+  .section-number {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-number::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+  }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+  }
+
+  .section-title .highlight {
+    color: var(--accent);
+    position: relative;
+  }
+
+  /* === 正文 === */
+  .section p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.95;
+    margin-bottom: 18px;
+    text-align: justify;
+  }
+
+  .section p strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* === 资讯卡片 === */
+  .news-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 28px 30px;
+    margin: 24px 0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .news-card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border);
+    transform: translateY(-2px);
+  }
+
+  .news-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+    opacity: 0.6;
+  }
+
+  .news-card-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .news-card-date {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    background: rgba(212, 168, 83, 0.1);
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .news-card-tag {
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  .news-card-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .news-card-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+
+  .news-card-desc strong {
+    color: var(--accent-light);
+    font-weight: 600;
+  }
+
+  /* === 数据亮点 === */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin: 32px 0;
+  }
+
+  .stat-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .stat-item:hover {
+    border-color: var(--border);
+    transform: translateY(-3px);
+  }
+
+  .stat-number {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 32px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--accent-light), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  /* === 引用块 === */
+  .pull-quote {
+    margin: 40px 0;
+    padding: 36px;
+    text-align: center;
+    position: relative;
+  }
+
+  .pull-quote::before,
+  .pull-quote::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  }
+
+  .pull-quote::before { top: 0; }
+  .pull-quote::after { bottom: 0; }
+
+  .pull-quote p {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .pull-quote .quote-mark {
+    display: block;
+    font-size: 48px;
+    color: var(--accent);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  /* === 分割线 === */
+  .divider {
+    text-align: center;
+    margin: 48px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .divider .line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  .divider .diamond {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    transform: rotate(45deg);
+    opacity: 0.6;
+  }
+
+  /* === 列表 === */
+  .feature-list {
+    list-style: none;
+    margin: 20px 0;
+  }
+
+  .feature-list li {
+    padding: 10px 0 10px 28px;
+    position: relative;
+    color: var(--text-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .feature-list li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    color: var(--accent);
+    font-size: 10px;
+  }
+
+  /* === 结尾 === */
+  .ending {
+    margin-top: 20px;
+    padding: 48px 0 20px;
+    text-align: center;
+    border-top: 1px solid var(--border-soft);
+  }
+
+  .ending-mark {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 8px;
+    margin-bottom: 16px;
+  }
+
+  .ending-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+  }
+
+  .ending-signature {
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--text-muted);
+    opacity: 0.6;
+  }
+
+  /* === 动画 === */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 响应式 */
+  @media (max-width: 640px) {
+    .hero { padding: 48px 0 40px; }
+    .hero-title { font-size: 30px; }
+    .hero-subtitle { font-size: 15px; }
+    .section-title { font-size: 22px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .stat-number { font-size: 26px; }
+    .news-card { padding: 20px 22px; }
+    .lead { padding: 24px 24px; }
+    .pull-quote p { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-tag">AUGUST 2026 · 月刊</div>
+    <h1 class="hero-title">AI 八月纪事<br/>2026 年中最值得关注的<br/>五件大事</h1>
+    <p class="hero-subtitle">从国产大模型集体开源到 GPT-5 的安全博弈，这个八月，AI 世界比你想象的更热闹。</p>
+    <div class="hero-meta">
+      <span>AI 前沿观察</span>
+      <span class="dot"></span>
+      <span><strong>2026.08.28</strong></span>
+      <span class="dot"></span>
+      <span>约 8 分钟</span>
+    </div>
+  </header>
+
+  <!-- 导语 -->
+  <div class="lead reveal">
+    <p>八月的 AI 圈，像一场没有中场休息的比赛。OpenAI 忙着加固安全防线，国内大厂集体亮出「开源」底牌，而 Meta 悄悄把 300 亿参数的 Agent 模型放到了每个人手里。这不是某一家的胜利，而是整个行业在加速奔跑。</p>
+  </div>
+
+  <!-- 数据概览 -->
+  <div class="stats-row reveal">
+    <div class="stat-item">
+      <div class="stat-number">2.4T</div>
+      <div class="stat-label">Qwen3.8 参数量</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">1M</div>
+      <div class="stat-label">上下文窗口</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">770B</div>
+      <div class="stat-label">混元 Hy4 参数量</div>
+    </div>
+  </div>
+
+  <!-- 第一章 -->
+  <section class="section reveal">
+    <div class="section-number">CHAPTER 01</div>
+    <h2 class="section-title">国产大模型的<span class="highlight">「开源之夏」</span></h2>
+    <p>如果要用一个词形容八月的国内 AI 圈，那一定是「集体开源」。先是阿里通义千问在 8 月 3 日发布 <strong>Qwen3.8-Max</strong>，随后在 8 月 12 日直接开源了旗舰权重 — 2.4 万亿参数的 MoE 架构，950 亿激活参数，百万级上下文，全模态支持。</p>
+    <p>紧接着，腾讯混元在 8 月 28 日发布并开源了 <strong>Hy4 preview</strong>，总参数 770B、激活参数 49B，上下文同样突破 1M，在代码、办公、科学等真实生产力任务上表现亮眼。</p>
+
+    <div class="news-card">
+      <div class="news-card-header">
+        <span class="news-card-date">08.03</span>
+        <span class="news-card-tag">阿里 · 通义千问</span>
+      </div>
+      <h3 class="news-card-title">Qwen3.8-Max 发布，开源旗舰权重</h3>
+      <p class="news-card-desc">2.4 万亿参数 MoE 架构，950 亿激活参数，100 万 token 上下文，原生支持图文音视频全模态。在 Arena 榜单上位列全球第五，视觉榜第二，仅次于 Claude 系列。<strong>更狠的是定价 —— 推理价格大幅下调。</strong></p>
+    </div>
+
+    <div class="news-card">
+      <div class="news-card-header">
+        <span class="news-card-date">08.28</span>
+        <span class="news-card-tag">腾讯 · 混元</span>
+      </div>
+      <h3 class="news-card-title">混元 Hy4 preview 开源，稳居第一梯队</h3>
+      <p class="news-card-desc">总参数 770B、激活参数 49B，上下文长度突破 1M。在代码生成、办公自动化、科学计算等真实生产力任务上展现出卓越能力，进一步巩固了国产开源模型的领先地位。</p>
+    </div>
+
+    <p>这一轮「开源潮」的意义远不止于技术本身。当越来越多的高质量模型变得触手可及，创业公司和开发者的门槛被进一步拉低 —— 你不需要自己训练千亿模型，站在巨人的肩膀上做微调就够了。</p>
+  </section>
+
+  <div class="divider reveal">
+    <span class="line"></span>
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+
+  <!-- 第二章 -->
+  <section class="section reveal">
+    <div class="section-number">CHAPTER 02</div>
+    <h2 class="section-title">GPT-5 时代的<span class="highlight">安全博弈</span></h2>
+    <p>八月的 OpenAI 有点忙。一方面，GPT-5 作为自 2023 年 GPT-4 以来的第一次重大版本升级，性能提升肉眼可见；另一方面，一场关于「AI 安全」的讨论正在升温。</p>
+    <p>8 月 18 日，OpenAI 发布了题为《网络安全关键能力时代的模型开发节奏》的文章，明确表示正在加强前沿 AI 模型的监控、对齐和安全保障。8 月 26 日，又公开了 Hugging Face 安全事件的调查结果以及后续措施。</p>
+
+    <div class="pull-quote">
+      <span class="quote-mark">"</span>
+      <p>当模型能力越来越强，安全不再是锦上添花，而是基础设施。</p>
+    </div>
+
+    <p>这背后是一个微妙的平衡：既要保持模型迭代的速度，又要确保不会失控。OpenAI 选择的路径是 —— <strong>放慢节奏，加固护栏</strong>。对于普通用户来说，这意味着更安全的使用体验，但也意味着最前沿的能力可能不会那么快全面开放。</p>
+  </section>
+
+  <div class="divider reveal">
+    <span class="line"></span>
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+
+  <!-- 第三章 -->
+  <section class="section reveal">
+    <div class="section-number">CHAPTER 03</div>
+    <h2 class="section-title">Agent 模型爆发：<span class="highlight">从对话到行动</span></h2>
+    <p>八月最被低估的一条新闻，可能来自 Meta。8 月 10 日，Meta 超级智能实验室发布了 <strong>Muse Glimmer</strong> —— 一个 300 亿参数的稠密模型，Apache 2.0 协议完全开源，专门为 Agent 场景设计。</p>
+
+    <div class="news-card">
+      <div class="news-card-header">
+        <span class="news-card-date">08.10</span>
+        <span class="news-card-tag">Meta · 开源</span>
+      </div>
+      <h3 class="news-card-title">Muse Glimmer：Agent 模型的新标杆</h3>
+      <p class="news-card-desc">30B dense 架构，Apache 2.0 完全开源，专注于工具调用和自主任务执行。这意味着任何人都可以基于它构建自己的 AI Agent —— 不需要 API，不需要付费，本地就能跑。</p>
+    </div>
+
+    <p>而在另一端，Qwen3.8-Max 展示了惊人的 Agent 能力 —— 无人工干预连续自主编码 16 天。这在以前是想都不敢想的事情。</p>
+
+    <ul class="feature-list">
+      <li><strong>工具调用</strong>：模型不再只会说话，还能调用外部工具完成实际任务</li>
+      <li><strong>自主规划</strong>：给定一个目标，模型能自己拆解步骤、执行、修正</li>
+      <li><strong>长时任务</strong>：从几分钟的对话延伸到几天、几周的连续工作</li>
+      <li><strong>多模态感知</strong>：看图、看视频、听声音，理解真实世界的信息</li>
+    </ul>
+
+    <p>我们正在见证一个关键转折点：AI 从「回答问题的工具」变成「能做事的助手」。这个变化的影响，可能比模型参数变大要深远得多。</p>
+  </section>
+
+  <div class="divider reveal">
+    <span class="line"></span>
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+
+  <!-- 第四章 -->
+  <section class="section reveal">
+    <div class="section-number">CHAPTER 04</div>
+    <h2 class="section-title">速度与成本：<span class="highlight">Flash 模型的竞赛</span></h2>
+    <p>当旗舰模型在比拼「谁更聪明」的时候，另一条赛道也在加速 —— 谁更快、更便宜。</p>
+    <p>8 月 13 日，Google 发布了 <strong>Gemini 3.7 Flash</strong>。顾名思义，Flash 系列主打速度和成本。相比上一代，新版本在摘要、提取、内容格式化等任务上有明显的速度提升，而价格保持在非常亲民的水平。</p>
+
+    <div class="pull-quote">
+      <span class="quote-mark">"</span>
+      <p>90% 的场景不需要最强的模型，需要的是又快又便宜的模型。</p>
+    </div>
+
+    <p>这是一个很重要的信号：AI 行业正在从「拼参数」走向「拼性价比」。对于大多数应用场景 —— 客服、摘要、分类、格式化 —— 一个快速、便宜、够用的模型，远比一个昂贵的顶级模型更有价值。</p>
+    <p>而国产模型在这条赛道上的优势可能更大。Qwen、Kimi、DeepSeek 等厂商的 Flash/轻量版本，价格已经低到了「几乎可以随便用」的程度。</p>
+  </section>
+
+  <div class="divider reveal">
+    <span class="line"></span>
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+
+  <!-- 第五章 -->
+  <section class="section reveal">
+    <div class="section-number">CHAPTER 05</div>
+    <h2 class="section-title">MCP 协议：<span class="highlight">AI 世界的 USB-C</span></h2>
+    <p>8 月 21 日，Anthropic 更新了 <strong>Model Context Protocol（MCP）</strong> 规范。如果你还没听说过 MCP，没关系 —— 你可以把它理解为 AI 模型的「通用接口标准」。</p>
+    <p>以前，每个 AI 应用对接外部工具都要自己写一套集成代码。有了 MCP，就像有了 USB-C 接口一样 —— 只要支持标准，任何工具、任何模型都能即插即用。</p>
+
+    <ul class="feature-list">
+      <li><strong>统一标准</strong>：一套协议对接所有模型和工具</li>
+      <li><strong>生态互联</strong>：开发者写一次，所有支持 MCP 的应用都能用</li>
+      <li><strong>降低门槛</strong>：不需要每家公司都造轮子</li>
+    </ul>
+
+    <p>这件事的短期影响可能不明显，但长期来看，它可能是 AI 从「单点工具」走向「生态系统」的关键一步。</p>
+  </section>
+
+  <div class="divider reveal">
+    <span class="line"></span>
+    <span class="diamond"></span>
+    <span class="line"></span>
+  </div>
+
+  <!-- 结尾 -->
+  <section class="section reveal">
+    <h2 class="section-title">写在最后</h2>
+    <p>回看整个八月，你会发现一个有趣的趋势：AI 不再是某几家公司的独角戏，而是变成了一场全员参与的马拉松。</p>
+    <p>开源让技术变得普惠，Agent 让能力变得实用，协议让生态变得互联。对于我们普通人来说，这是最好的时代 —— 你不需要自己造模型，只需要想好「用它来做什么」。</p>
+    <p>九月见。</p>
+  </section>
+
+  <!-- 结尾标识 -->
+  <div class="ending reveal">
+    <div class="ending-mark">◆ ◆ ◆</div>
+    <div class="ending-text">全 文 完</div>
+    <div class="ending-signature">AI 前沿观察 · 每月精选</div>
+  </div>
+
+</div>
+
+<script>
+  // 滚动显示动画
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+      }
+    });
+  }, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  document.querySelectorAll('.reveal').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
